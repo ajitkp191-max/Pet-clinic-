@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Pal's Pet Clinic | 24/7 Care</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-bg { background-color: #e8f5f1; }
+        .btn-teal { background-color: #0d9488; color: white; }
+        .btn-teal:hover { background-color: #0f766e; }
+        #bookingModal { display: none; }
+        html { scroll-behavior: smooth; }
+        .gallery-img:hover { transform: scale(1.05); transition: all 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-gray-50">
+
+    <nav class="flex items-center justify-between px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="text-teal-600 text-3xl"><i class="fas fa-paw"></i></div>
+            <h1 class="text-xl font-bold leading-none text-teal-900">Dr. Pal's Pet Clinic</h1>
+        </div>
+        <div class="hidden md:flex gap-8 font-medium text-teal-800">
+            <a href="#" class="hover:text-teal-500">Home</a>
+            <a href="#gallery" class="hover:text-teal-500">Gallery</a>
+            <a href="#services" class="hover:text-teal-500">Services</a>
+        </div>
+        <button onclick="openModal()" class="btn-teal px-6 py-2 rounded-full font-bold shadow-md">Book Appointment</button>
+    </nav>
+
+    <header class="hero-bg py-16 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1 text-center md:text-left">
+                <h2 class="text-5xl font-extrabold text-teal-900 mb-6 leading-tight">Your Pets, <span class="text-teal-600">Our Family</span></h2>
+                <p class="text-teal-700 text-lg mb-8 max-w-md">Professional 24/7 veterinary care for your beloved companions.</p>
+                <button onclick="openModal()" class="btn-teal px-10 py-4 rounded-full font-bold text-xl shadow-xl transition-all hover:scale-105">
+                    Schedule Visit Now
+                </button>
+            </div>
+            <div class="flex-1">
+                <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=800" 
+                     alt="Happy Dog" class="rounded-3xl shadow-2xl border-8 border-white">
+            </div>
+        </div>
+    </header>
+
+    <section id="services" class="py-16 px-6 max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Specialized Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <i class="fas fa-stethoscope text-4xl text-teal-600 mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">Health Checkups</h4>
+                <p class="text-gray-500">Preventative care and routine exams for all ages.</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <i class="fas fa-syringe text-4xl text-teal-600 mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">Vaccinations</h4>
+                <p class="text-gray-500">Keeping your pets safe from common diseases.</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <i class="fas fa-cut text-4xl text-teal-600 mb-4"></i>
+                <h4 class="font-bold text-xl mb-2">Grooming</h4>
+                <p class="text-gray-500">Complete hair, nail, and skin care services.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-16 px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Happy Patients</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=400" class="rounded-xl h-48 w-full object-cover gallery-img shadow-md">
+                <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=400" class="rounded-xl h-48 w-full object-cover gallery-img shadow-md">
+                <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&q=80&w=400" class="rounded-xl h-48 w-full object-cover gallery-img shadow-md">
+                <img src="https://images.unsplash.com/photo-1548191265-cc70d3d45ba1?auto=format&fit=crop&q=80&w=400" class="rounded-xl h-48 w-full object-cover gallery-img shadow-md">
+            </div>
+        </div>
+    </section>
+
+    <div id="bookingModal" class="fixed inset-0 bg-black/60 z-[100] p-4 flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl font-bold">&times;</button>
+            <h2 class="text-2xl font-bold text-teal-900 mb-6 text-center">Schedule Appointment</h2>
+            
+            <form action="https://formspree.io/f/xwvppazz" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Owner Name</label>
+                    <input type="text" name="owner_name" placeholder="Full Name" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Pet Name</label>
+                        <input type="text" name="pet_name" placeholder="Name" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Breed</label>
+                        <input type="text" name="breed" placeholder="Breed Type" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Pet Age</label>
+                        <input type="text" name="age" placeholder="e.g. 2 yrs" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Date</label>
+                        <input type="date" name="date" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Number</label>
+                    <input type="tel" name="phone" placeholder="7748803566" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
+                </div>
+                
+                <button type="submit" class="w-full bg-teal-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-teal-700 shadow-lg">Confirm Request</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/917748803566" target="_blank" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-2xl z-50 hover:scale-110 transition-transform">
+        <i class="fab fa-whatsapp text-4xl"></i>
+    </a>
+
+    <script>
+        const modal = document.getElementById('bookingModal');
+        function openModal() { modal.style.display = 'flex'; }
+        function closeModal() { modal.style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == modal) closeModal(); }
+    </script>
+</body>
+</html>
