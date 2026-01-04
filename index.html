@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Pet Clinic | 24/7 Care</title>
+    <title>Pet Clinic | 24/7 Professional Care</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -17,17 +17,34 @@
 </head>
 <body class="font-sans text-gray-800 bg-gray-50">
 
-    <nav class="flex items-center justify-between px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
-        <div class="flex items-center gap-2">
-            <div class="text-teal-600 text-3xl"><i class="fas fa-paw"></i></div>
-            <h1 class="text-xl font-bold leading-none text-teal-900">Pet Clinic</h1>
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="flex items-center justify-between px-8 py-4">
+            <div class="flex items-center gap-2">
+                <div class="text-teal-600 text-3xl"><i class="fas fa-paw"></i></div>
+                <h1 class="text-xl font-bold leading-none text-teal-900">Pet Clinic</h1>
+            </div>
+
+            <div class="hidden md:flex gap-8 font-medium text-teal-800">
+                <a href="#" class="hover:text-teal-500">Home</a>
+                <a href="#services" class="hover:text-teal-500">Services</a>
+                <a href="#gallery" class="hover:text-teal-500">Gallery</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button type="button" onclick="openModal()" class="hidden sm:block btn-teal px-6 py-2 rounded-full font-bold shadow-md">Book Appointment</button>
+                
+                <button onclick="toggleMobileMenu()" class="md:hidden text-teal-900 text-2xl focus:outline-none">
+                    <i id="menuIcon" class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
-        <div class="hidden md:flex gap-8 font-medium text-teal-800">
-            <a href="#" class="hover:text-teal-500">Home</a>
-            <a href="#gallery" class="hover:text-teal-500">Gallery</a>
-            <a href="#services" class="hover:text-teal-500">Services</a>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-teal-50 border-t border-teal-100 flex flex-col p-4 space-y-4 font-medium text-teal-800">
+            <a href="#" onclick="toggleMobileMenu()" class="hover:text-teal-500">Home</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="hover:text-teal-500">Services</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="hover:text-teal-500">Gallery</a>
+            <button type="button" onclick="openModal(); toggleMobileMenu()" class="btn-teal px-6 py-3 rounded-xl font-bold text-center">Book Appointment</button>
         </div>
-        <button onclick="openModal()" class="btn-teal px-6 py-2 rounded-full font-bold shadow-md">Book Appointment</button>
     </nav>
 
     <header class="hero-bg py-16 px-6">
@@ -35,7 +52,7 @@
             <div class="flex-1 text-center md:text-left">
                 <h2 class="text-5xl font-extrabold text-teal-900 mb-6 leading-tight">Your Pets, <span class="text-teal-600">Our Family</span></h2>
                 <p class="text-teal-700 text-lg mb-8 max-w-md">Professional 24/7 veterinary care for your beloved companions.</p>
-                <button onclick="openModal()" class="btn-teal px-10 py-4 rounded-full font-bold text-xl shadow-xl transition-all hover:scale-105">
+                <button type="button" onclick="openModal()" class="btn-teal px-10 py-4 rounded-full font-bold text-xl shadow-xl transition-all hover:scale-105">
                     Schedule Visit Now
                 </button>
             </div>
@@ -81,10 +98,10 @@
 
     <div id="bookingModal" class="fixed inset-0 bg-black/60 z-[100] p-4 flex items-center justify-center backdrop-blur-sm">
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl font-bold">&times;</button>
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl font-bold" aria-label="Close">&times;</button>
             <h2 class="text-2xl font-bold text-teal-900 mb-6 text-center">Schedule Appointment</h2>
             
-            <form action="https://formspree.io/f/xlgdwojd" method="POST" class="space-y-4">
+            <form action="https://formspree.io/f/xlgdwojd" method="POST" id="appointmentForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Owner Name</label>
                     <input type="text" name="owner_name" placeholder="Full Name" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
@@ -108,7 +125,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Date</label>
-                        <input type="date" name="date" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
+                        <input type="date" name="date" id="appointmentDate" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
                     </div>
                 </div>
 
@@ -117,20 +134,79 @@
                     <input type="tel" name="phone" placeholder="7748803566" required class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-teal-500">
                 </div>
                 
-                <button type="submit" class="w-full bg-teal-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-teal-700 shadow-lg">Confirm Request</button>
+                <button type="submit" id="submitBtn" class="w-full bg-teal-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-teal-700 shadow-lg transition-colors">Confirm Request</button>
             </form>
         </div>
     </div>
+
+    <footer class="bg-teal-950 text-teal-50 py-12 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fas fa-paw text-2xl text-teal-400"></i>
+                    <span class="text-xl font-bold text-white">Pet Clinic</span>
+                </div>
+                <p class="text-teal-200/70">Professional, compassionate veterinary care since 2010. Your pets' health is our top priority.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4 uppercase text-sm tracking-widest">Quick Links</h4>
+                <ul class="space-y-2 text-teal-200/70">
+                    <li><a href="#" class="hover:text-teal-400 transition">Home</a></li>
+                    <li><a href="#services" class="hover:text-teal-400 transition">Services</a></li>
+                    <li><a href="#gallery" class="hover:text-teal-400 transition">Gallery</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4 uppercase text-sm tracking-widest">Contact Us</h4>
+                <div class="space-y-3 text-teal-200/70">
+                    <p><i class="fas fa-phone mr-2 text-teal-400 w-5"></i> +91 77488 03566</p>
+                    <p><i class="fas fa-envelope mr-2 text-teal-400 w-5"></i> care@petclinic.com</p>
+                    <p><i class="fas fa-map-marker-alt mr-2 text-teal-400 w-5"></i> 123 Pet Lane, City Center</p>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto border-t border-teal-900 mt-10 pt-6 text-center text-xs text-teal-500">
+            &copy; 2024 Pet Clinic. All rights reserved.
+        </div>
+    </footer>
 
     <a href="https://wa.me/917748803566" target="_blank" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-2xl z-50 hover:scale-110 transition-transform">
         <i class="fab fa-whatsapp text-4xl"></i>
     </a>
 
     <script>
+        // Modal Control
         const modal = document.getElementById('bookingModal');
         function openModal() { modal.style.display = 'flex'; }
         function closeModal() { modal.style.display = 'none'; }
         window.onclick = function(event) { if (event.target == modal) closeModal(); }
+
+        // Mobile Menu Control
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        }
+
+        // Form Logic
+        const dateInput = document.getElementById('appointmentDate');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        const form = document.getElementById('appointmentForm');
+        form.onsubmit = function() {
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Sending Request...";
+            btn.style.opacity = "0.7";
+            btn.disabled = true;
+        };
     </script>
 </body>
-</html>
+                </html>
+                
